@@ -1,4 +1,5 @@
 MemberStack.onReady.then(async function (member) {
+  //v2.0
   //On load page
   let primaryBtn = $("#starQuiz"),
     questionItem = $(".question__item"),
@@ -578,13 +579,18 @@ $(".lesson__chat--nav").on("click", function () {
 });
 
 //Close Lesson Chat
-$("#closeChatBtn,.lesson__chat--container").on("click", function () {
-  $(".lesson__side--div").removeClass("is--open");
+$("#closeChatBtn,.lesson__chat--bg").on("click", function () {
+  $(".lesson__side--div").removeClass("is--open xpand");
   setTimeout(() => {
     $(".lesson__chat--wrapper").removeClass("is--active");
     $(".lesson__chat--container").removeClass("is--active");
     $("body").removeClass("no__scroll-mobile");
   }, 300);
+});
+
+//Xpand Chat
+$("#xpandBtn").on("click", function () {
+  $(".lesson__side--div").toggleClass("xpand");
 });
 
 //Get If the URL has Play tag
