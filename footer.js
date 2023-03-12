@@ -218,7 +218,7 @@ MemberStack.onReady.then(async function (member) {
     } else {
       //Set div top
 
-      var promo = true, // true if active, false if not
+      var promo = false, // true if active, false if not
         promoEndDate = 1678632900, // Set the end date
         disCountCP = "SPD23", // Set coupon name
         promoDicount = 20, // Set the discount number
