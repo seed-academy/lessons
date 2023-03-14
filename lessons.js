@@ -1,5 +1,4 @@
 MemberStack.onReady.then(async function (member) {
-  //v2.0
   //On load page
   let primaryBtn = $("#starQuiz"),
     questionItem = $(".question__item"),
@@ -567,7 +566,7 @@ MemberStack.onReady.then(async function (member) {
 });
 
 //Open Lesson Chat
-$(".lesson__chat--nav").on("click", function () {
+$("#chatBtn").on("click", function () {
   $("body").addClass("no__scroll-mobile");
   $(".lesson__chat--container").addClass("is--active");
   setTimeout(() => {
