@@ -15,11 +15,17 @@ MemberStack.onReady.then(async function (member) {
     anwsersListWrapper = $("#quizList"),
     slug = $("#lessonSlug").val(),
     lessonName = $("#lessonName").val(),
+    nextUrl = $("#nextLesson").val(),
     courseStatus = $("#coursesStatus").val(),
     courseMetadata = $("#courseMetadata").val(),
     freemium = $("#lessonPublic").val(),
     academyPro = member["pro"] || "false",
     starter = member["starter"] || "false";
+
+  //Set Next lesson Btn
+  if (nextUrl !== "") {
+    restart.text("Próxima lección");
+  }
 
   //Get card info
   let totalQuestions = questionItem.length;
@@ -60,6 +66,30 @@ MemberStack.onReady.then(async function (member) {
 
   //Check if member is login
   if (member.loggedIn) {
+    //Get If the URL has Play tag
+    $(document).ready(function () {
+      if (window.location.href.indexOf("play") > -1) {
+        $("body").toggleClass("play");
+        $("#quizInfoBlock").css({
+          opacity: 0,
+          transform: "translate(0px, 20px)"
+        });
+        setTimeout(() => {
+          $("#quizInfoBlock").css({
+            opacity: 1,
+            transform: "translate(0px, 0px)",
+            "-ms-transform": "translate(0px, 0px)",
+            "-webkit-transform": "translate(0px, 0px)"
+          });
+        }, 400);
+        setTimeout(() => {
+          $("#backBtn").removeClass("is--fake").addClass("hover--link");
+          $("#starQuiz").removeClass("is--fake").addClass("is--green");
+          $("#starQuiz").text("Comenzar");
+        }, 1000);
+      }
+    });
+
     //Get Member data
     const metadata = await member.getMetaData();
     const course = (metadata[`${courseMetadata}`] =
@@ -234,13 +264,20 @@ MemberStack.onReady.then(async function (member) {
       $(".quiz__points").text(`${grantTotal}%`);
       $("#wrongAnswers").text(wrongAnswers);
 
+      //Reload the page or go to the next lesson
+
       restart.on("click", function () {
         $("#formPoints").val(studentTotalPoints);
-        setTimeout(() => {
-          location.reload();
-        }, 500);
+        if (nextUrl !== "") {
+          setTimeout(() => {
+            window.location = nextUrl;
+          }, 500);
+        } else {
+          setTimeout(() => {
+            location.reload();
+          }, 500);
+        }
       });
-
       winnerPointText.text(`${points}pts.`);
 
       //Display Complete Banner
@@ -590,28 +627,4 @@ $("#closeChatBtn,.lesson__chat--bg").on("click", function () {
 //Xpand Chat
 $("#xpandBtn").on("click", function () {
   $(".lesson__side--div").toggleClass("xpand");
-});
-
-//Get If the URL has Play tag
-$(document).ready(function () {
-  if (window.location.href.indexOf("play") > -1) {
-    $("body").toggleClass("play");
-    $("#quizInfoBlock").css({
-      opacity: 0,
-      transform: "translate(0px, 20px)"
-    });
-    setTimeout(() => {
-      $("#quizInfoBlock").css({
-        opacity: 1,
-        transform: "translate(0px, 0px)",
-        "-ms-transform": "translate(0px, 0px)",
-        "-webkit-transform": "translate(0px, 0px)"
-      });
-    }, 400);
-    setTimeout(() => {
-      $("#backBtn").removeClass("is--fake").addClass("hover--link");
-      $("#starQuiz").removeClass("is--fake").addClass("is--green");
-      $("#starQuiz").text("Comenzar");
-    }, 1000);
-  }
 });
