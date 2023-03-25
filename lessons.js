@@ -24,7 +24,7 @@ MemberStack.onReady.then(async function (member) {
 
   //Set Next lesson Btn
   if (nextUrl !== "") {
-    restart.text("Próxima lección");
+    restart.val("Próxima lección");
   }
 
   //Get card info
@@ -66,30 +66,6 @@ MemberStack.onReady.then(async function (member) {
 
   //Check if member is login
   if (member.loggedIn) {
-    //Get If the URL has Play tag
-    $(document).ready(function () {
-      if (window.location.href.indexOf("play") > -1) {
-        $("body").toggleClass("play");
-        $("#quizInfoBlock").css({
-          opacity: 0,
-          transform: "translate(0px, 20px)"
-        });
-        setTimeout(() => {
-          $("#quizInfoBlock").css({
-            opacity: 1,
-            transform: "translate(0px, 0px)",
-            "-ms-transform": "translate(0px, 0px)",
-            "-webkit-transform": "translate(0px, 0px)"
-          });
-        }, 400);
-        setTimeout(() => {
-          $("#backBtn").removeClass("is--fake").addClass("hover--link");
-          $("#starQuiz").removeClass("is--fake").addClass("is--green");
-          $("#starQuiz").text("Comenzar");
-        }, 1000);
-      }
-    });
-
     //Get Member data
     const metadata = await member.getMetaData();
     const course = (metadata[`${courseMetadata}`] =
