@@ -37,33 +37,6 @@ MemberStack.onReady.then(async function (member) {
     $(".lesson__courses--card").addClass("is--lock");
   }
 
-  setTimeout(() => {
-    $(".lesson__main--wrapper,.fs-toc_link-content").toggleClass("none");
-  }, 400);
-  setTimeout(() => {
-    $("#starBtn2,#starBtn3,#fakeBtn").toggleClass("none");
-  }, 400);
-
-  //On Click
-  $(".dashboard__nav--btn").on("click", function () {
-    $(this).addClass("w--current");
-  });
-
-  //Open & Close Mobile Nabvar
-  $("#mobileNavBtn").on("click", function () {
-    $(this).find(".icon").toggleClass("none");
-    $(".dashboard__nav--wrapper").toggleClass("show");
-    $("body").toggleClass("no-scroll");
-  });
-
-  $("#mobileClose").on("click", function () {
-    $("#mobileNavBtn").click();
-  });
-
-  $("#closeDestopNav").on("click", function () {
-    $(".sidebar__spacer").toggleClass("open");
-  });
-
   //Check if member is login
   if (member.loggedIn) {
     //Get Member data
@@ -72,10 +45,13 @@ MemberStack.onReady.then(async function (member) {
       metadata[`${courseMetadata}`] || []);
     let studentPoints = +member["points"] || 0;
 
-    if (freemium === "true" || academyPro === "true" || starter === "true") {
+    //freemium === "true" ||
+    if (academyPro === "true" || starter === "true") {
       $("#lessonGlossary").removeClass("is--lock");
       $(".fs-toc_link").removeClass("is--disable");
       $("#starBtn1,#starBtn2").removeAttr("href");
+    } else {
+      $(".lesson__chat--nav").addClass("none");
     }
 
     //Show Quiz animation
@@ -603,4 +579,35 @@ $("#closeChatBtn,.lesson__chat--bg").on("click", function () {
 //Xpand Chat
 $("#xpandBtn").on("click", function () {
   $(".lesson__side--div").toggleClass("xpand");
+});
+
+//On Page load
+$(function () {
+  setTimeout(() => {
+    $(".lesson__main--wrapper,.fs-toc_link-content").toggleClass("none");
+    $(".lesson__chat--nav").removeClass("is--down");
+  }, 1300);
+  setTimeout(() => {
+    $("#starBtn2,#starBtn3,#fakeBtn").toggleClass("none");
+  }, 1100);
+
+  //On Click
+  $(".dashboard__nav--btn").on("click", function () {
+    $(this).addClass("w--current");
+  });
+
+  //Open & Close Mobile Nabvar
+  $("#mobileNavBtn").on("click", function () {
+    $(this).find(".icon").toggleClass("none");
+    $(".dashboard__nav--wrapper").toggleClass("show");
+    $("body").toggleClass("no-scroll");
+  });
+
+  $("#mobileClose").on("click", function () {
+    $("#mobileNavBtn").click();
+  });
+
+  $("#closeDestopNav").on("click", function () {
+    $(".sidebar__spacer").toggleClass("open");
+  });
 });
